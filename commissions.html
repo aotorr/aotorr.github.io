@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commissions — Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f5f0e8;
+      --paper: #ece6d9;
+      --ink:   #1c1a17;
+      --muted: #7a7162;
+      --accent:#b85c38;
+      --shadow:rgba(28,26,23,0.13);
+    }
+    body {
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header { text-align:center; padding:4rem 2rem 1.5rem; }
+    header::after { content:''; display:block; width:60px; height:2px; background:var(--accent); margin:1.25rem auto 0; }
+    .site-title { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,6vw,5rem); font-weight:700; line-height:1.1; }
+    .site-title em { font-style:italic; color:var(--accent); }
+    .site-subtitle { margin-top:0.5rem; font-size:0.9rem; font-weight:300; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+
+    /* ── Nav ── */
+    nav { display:flex; justify-content:center; flex-wrap:wrap; gap:0.25rem 0.1rem; padding:1.75rem 2rem 2.5rem; }
+    nav a { font-size:0.8rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; color:var(--muted); padding:0.4rem 1.1rem; border:1px solid transparent; border-radius:2px; transition:color .2s,border-color .2s; }
+    nav a:hover, nav a.active { color:var(--ink); border-color:var(--ink); }
+
+    /* ── Page layout ── */
+    .comm-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ── Info section ── */
+    .comm-info {
+      margin-bottom: 3rem;
+    }
+    .comm-info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1rem;
+    }
+    .comm-info h2 em { font-style: italic; color: var(--accent); }
+
+    .comm-info p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Pricing table */
+    .pricing {
+      margin: 1.5rem 0;
+      background: var(--paper);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+    }
+    .pricing h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+    .pricing ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .pricing ul li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 300;
+      border-bottom: 1px dashed #c9bfae;
+      padding-bottom: 0.4rem;
+    }
+    .pricing ul li:last-child { border-bottom: none; padding-bottom: 0; }
+    .pricing ul li .price { font-weight: 500; color: var(--accent); }
+
+    /* Status badge */
+    .status {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .status.open   { background: #d4edda; color: #2d6a4f; }
+    .status.closed { background: #f8d7da; color: #842029; }
+
+    /* ── Form ── */
+    .form-card {
+      background: var(--paper);
+      padding: 2rem 2rem 2rem;
+      box-shadow: 3px 5px 22px var(--shadow);
+    }
+    .form-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-card h2 em { font-style: italic; color: var(--accent); }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+    .field label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      background: var(--cream);
+      border: 1px solid #c9bfae;
+      border-radius: 2px;
+      padding: 0.65rem 0.85rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--accent);
+    }
+    .field textarea { min-height: 130px; }
+
+    .submit-btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .submit-btn:hover { background: var(--accent); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    /* ── Footer ── */
+    footer { text-align:center; padding:2rem; font-size:0.75rem; color:var(--muted); letter-spacing:0.08em; border-top:1px solid #ddd5c4; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="site-title">Your <em>Name</em></h1>
+    <p class="site-subtitle">Artist &amp; Illustrator</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="sketchbook.html">Sketchbook</a>
+    <a href="commissions.html" class="active">Commissions</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main class="comm-wrap">
+
+    <!-- ── COMMISSION INFO ─────────────────────────────────────
+         Edit everything in this section freely:
+         - Change the status badge to "open" or "closed"
+         - Update the pricing list items and prices
+         - Edit the paragraph text to describe your terms
+    ─────────────────────────────────────────────────────────── -->
+    <section class="comm-info">
+      <h2>Commission <em>Info</em></h2>
+
+      <!-- Status: change class to "closed" and text if you're not taking commissions -->
+      <span class="status open">✦ Commissions Open</span>
+
+      <p>
+        Write a short intro here — what kinds of commissions you take,
+        your general style, turnaround time, etc.
+      </p>
+
+      <div class="pricing">
+        <h3>Pricing</h3>
+        <ul>
+          <!-- Add, remove, or edit these lines as needed -->
+          <li>Sketch (bust) <span class="price">$XX</span></li>
+          <li>Sketch (full body) <span class="price">$XX</span></li>
+          <li>Flat colour (bust) <span class="price">$XX</span></li>
+          <li>Flat colour (full body) <span class="price">$XX</span></li>
+          <li>Fully rendered illustration <span class="price">$XX</span></li>
+          <li>Additional character <span class="price">+$XX</span></li>
+        </ul>
+      </div>
+
+      <p>
+        Add any terms of service, payment info (e.g. PayPal up front),
+        or anything else commissioners should know before submitting a request.
+      </p>
+    </section>
+
+    <!-- ── COMMISSION FORM ─────────────────────────────────────
+         HOW TO SET UP EMAIL DELIVERY (free, ~2 min):
+         1. Go to https://formspree.io and sign up with aotor.424@gmail.com
+         2. Create a new form — Formspree gives you an endpoint like:
+            https://formspree.io/f/xabcdefg
+         3. Replace "YOUR_FORMSPREE_ID" below with that ID (just the last part, e.g. xabcdefg)
+
+         Formspree will forward every submission straight to your email.
+         No server or backend needed — it works perfectly on GitHub Pages.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="form-card">
+      <h2>Request a <em>Commission</em></h2>
+
+      <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+
+        <!-- Hidden field so you know which page sent the email -->
+        <input type="hidden" name="_subject" value="New Commission Request" />
+
+        <div class="field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="type">Commission Type</label>
+          <select id="type" name="commission_type" required>
+            <option value="" disabled selected>Select a type…</option>
+            <option>Sketch — bust</option>
+            <option>Sketch — full body</option>
+            <option>Flat colour — bust</option>
+            <option>Flat colour — full body</option>
+            <option>Fully rendered illustration</option>
+            <option>Other / not sure</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="idea">Describe Your Idea</label>
+          <textarea id="idea" name="idea" placeholder="Tell me about your commission — character details, mood, references, anything helpful!" required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="refs">Reference Links (optional)</label>
+          <input type="text" id="refs" name="references" placeholder="https://... (image links, Pinterest boards, etc.)" />
+        </div>
+
+        <button type="submit" class="submit-btn">Send Request</button>
+
+      </form>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Your Name &mdash; All rights reserved</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sketchbook — Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f5f0e8;
+      --paper: #ece6d9;
+      --ink:   #1c1a17;
+      --muted: #7a7162;
+      --accent:#b85c38;
+      --shadow:rgba(28,26,23,0.13);
+    }
+    body {
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+    header { text-align:center; padding:4rem 2rem 1.5rem; }
+    header::after { content:''; display:block; width:60px; height:2px; background:var(--accent); margin:1.25rem auto 0; }
+    .site-title { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,6vw,5rem); font-weight:700; line-height:1.1; }
+    .site-title em { font-style:italic; color:var(--accent); }
+    .site-subtitle { margin-top:0.5rem; font-size:0.9rem; font-weight:300; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+    nav { display:flex; justify-content:center; flex-wrap:wrap; gap:0.25rem 0.1rem; padding:1.75rem 2rem 2.5rem; }
+    nav a { font-size:0.8rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; color:var(--muted); padding:0.4rem 1.1rem; border:1px solid transparent; border-radius:2px; transition:color .2s,border-color .2s; }
+    nav a:hover, nav a.active { color:var(--ink); border-color:var(--ink); }
+
+    /* ── Sketchbook section ── */
+    .sketchbook-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .page-intro {
+      margin-bottom: 3rem;
+    }
+    .page-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 0.5rem;
+    }
+    .page-intro h2 em { font-style:italic; color:var(--accent); }
+    .page-intro p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Polaroid grid ── */
+    /* Loose scattered layout using CSS grid with random-ish offsets via nth-child */
+    .sketch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2.5rem 2rem;
+      align-items: start;
+    }
+
+    /* Polaroid card */
+    .sketch-card {
+      background: #fff;
+      padding: 10px 10px 56px;
+      box-shadow: 3px 5px 20px var(--shadow);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Stagger rotations and vertical offsets for a scattered feel */
+    .sketch-card:nth-child(4n+1) { transform: rotate(-2.5deg) translateY(0px);   }
+    .sketch-card:nth-child(4n+2) { transform: rotate(1.8deg)  translateY(12px);  }
+    .sketch-card:nth-child(4n+3) { transform: rotate(-0.8deg) translateY(-8px);  }
+    .sketch-card:nth-child(4n)   { transform: rotate(3deg)    translateY(6px);   }
+
+    .sketch-card:hover {
+      transform: rotate(0deg) scale(1.04) translateY(-6px) !important;
+      box-shadow: 8px 14px 38px var(--shadow);
+      z-index: 10;
+    }
+
+    .sketch-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;     /* square crop — change to e.g. 4/3 if you prefer */
+      object-fit: cover;
+      display: block;
+      filter: sepia(8%);        /* very subtle warmth; remove if you don't want it */
+    }
+
+    /* Handwritten caption using Caveat */
+    .sketch-card .note {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: #3a3630;
+      line-height: 1.2;
+    }
+    .sketch-card .note .sketch-date {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Placeholder */
+    .sketch-card.placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      border: 1.5px dashed #c9bfae;
+      box-shadow: none;
+      background: var(--paper);
+      padding-bottom: 10px;
+    }
+    .sketch-card.placeholder span {
+      font-size: 1.8rem;
+      color: #c9bfae;
+    }
+
+    footer { text-align:center; padding:2rem; font-size:0.75rem; color:var(--muted); letter-spacing:0.08em; border-top:1px solid #ddd5c4; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="site-title">Your <em>Name</em></h1>
+    <p class="site-subtitle">Artist &amp; Illustrator</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="sketchbook.html" class="active">Sketchbook</a>
+    <a href="commissions.html">Commissions</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main class="sketchbook-wrap">
+
+    <div class="page-intro">
+      <h2>The <em>Sketchbook</em></h2>
+      <p>Doodles, studies, and work-in-progress bits — the messy behind-the-scenes stuff.</p>
+    </div>
+
+    <!-- ── SKETCH GRID ──────────────────────────────────────────
+         HOW TO ADD SKETCHES:
+         Copy an <article> block, swap the image src, title, and date.
+         Cards auto-rotate and scatter — no extra CSS needed.
+
+         The aspect-ratio on .sketch-card img is set to 1:1 (square).
+         If your sketches are portrait/landscape, change it to e.g. "4/3" or "3/4"
+         or remove the aspect-ratio rule entirely to show the full image.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="sketch-grid">
+
+      <article class="sketch-card">
+        <img src="images/sketch-01.jpg" alt="sketch" />
+        <div class="note">
+          quick study
+          <span class="sketch-date">Jan 2025</span>
+        </div>
+      </article>
+
+      <article class="sketch-card">
+        <img src="images/sketch-02.jpg" alt="sketch" />
+        <div class="note">
+          character concept
+          <span class="sketch-date">Feb 2025</span>
+        </div>
+      </article>
+
+      <article class="sketch-card">
+        <img src="images/sketch-03.jpg" alt="sketch" />
+        <div class="note">
+          hands practice
+          <span class="sketch-date">Feb 2025</span>
+        </div>
+      </article>
+
+      <article class="sketch-card">
+        <img src="images/sketch-04.jpg" alt="sketch" />
+        <div class="note">
+          late night doodle
+          <span class="sketch-date">Mar 2025</span>
+        </div>
+      </article>
+
+      <article class="sketch-card">
+        <img src="images/sketch-05.jpg" alt="sketch" />
+        <div class="note">
+          WIP
+          <span class="sketch-date">Apr 2025</span>
+        </div>
+      </article>
+
+      <article class="sketch-card">
+        <img src="images/sketch-06.jpg" alt="sketch" />
+        <div class="note">
+          figure study
+          <span class="sketch-date">Apr 2025</span>
+        </div>
+      </article>
+
+      <!-- Placeholder — remove once you've filled in real images -->
+      <article class="sketch-card placeholder" aria-hidden="true">
+        <span>＋</span>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Your Name &mdash; All rights reserved</p>
+  </footer>
+
+</body>
+</html>
