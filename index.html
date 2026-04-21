@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Portfolio</title>
+
+  <!-- Fonts: Playfair Display (display) + DM Sans (body/nav) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #f5f0e8;
+      --paper:   #ece6d9;
+      --ink:     #1c1a17;
+      --muted:   #7a7162;
+      --accent:  #b85c38;
+      --shadow:  rgba(28, 26, 23, 0.13);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      /* subtle grain texture via SVG data URI */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ─── Header ───────────────────────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      margin: 1.25rem auto 0;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .site-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .site-subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── Nav ──────────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.1rem;
+      padding: 1.75rem 2rem 2.5rem;
+    }
+
+    nav a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 0.4rem 1.1rem;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    nav a + a::before {
+      /* dot separator — decorative only */
+    }
+
+    /* ─── Gallery ──────────────────────────────────────────────── */
+    .gallery-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .gallery-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    /* CSS columns = masonry-style flow */
+    .gallery-grid {
+      columns: 3 280px;
+      column-gap: 1.5rem;
+    }
+
+    /* ─── Art Card ─────────────────────────────────────────────── */
+    .art-card {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+      background: var(--paper);
+      padding: 10px 10px 40px; /* tape-mount top + extra bottom for caption */
+      box-shadow: 3px 4px 18px var(--shadow);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Each card gets a slight random tilt via nth-child rotations */
+    .art-card:nth-child(3n+1) { transform: rotate(-1.2deg); }
+    .art-card:nth-child(3n+2) { transform: rotate(0.8deg);  }
+    .art-card:nth-child(3n)   { transform: rotate(-0.4deg); }
+
+    .art-card:hover {
+      transform: rotate(0deg) scale(1.02) translateY(-4px) !important;
+      box-shadow: 6px 10px 32px var(--shadow);
+      z-index: 10;
+    }
+
+    /* Faux tape strip at top */
+    .art-card::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 16px;
+      background: rgba(184, 92, 56, 0.25);
+      border: 1px solid rgba(184, 92, 56, 0.18);
+      border-radius: 2px;
+    }
+
+    .art-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .art-card .caption {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      right: 10px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ─── Placeholder card (shows how to add images) ───────────── */
+    .art-card.placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      border: 1.5px dashed #c9bfae;
+      box-shadow: none;
+    }
+
+    .art-card.placeholder .plus {
+      font-size: 2rem;
+      color: #c9bfae;
+      user-select: none;
+    }
+
+    /* ─── Footer ───────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      border-top: 1px solid #ddd5c4;
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .gallery-grid { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header>
+    <h1 class="site-title">Your <em>Name</em></h1>
+    <p class="site-subtitle">Artist &amp; Illustrator</p>
+  </header>
+
+  <!-- ── NAV ────────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="active">Work</a>
+    <a href="about.html">About</a>
+    <a href="sketchbook.html">Sketchbook</a>
+    <a href="commissions.html">Commissions</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- ── GALLERY ────────────────────────────────────────────── -->
+  <section class="gallery-section">
+    <h2>Selected Works</h2>
+
+    <div class="gallery-grid">
+
+      <!--
+        HOW TO ADD YOUR ART:
+        Copy one of the <article> blocks below.
+        Replace "images/your-image.jpg" with the path to your image file.
+        Replace "Title of work" with your piece's name.
+        The cards will automatically stagger and tilt.
+      -->
+
+      <!-- Example card 1 -->
+      <article class="art-card">
+        <img src="images/piece-01.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2024</span>
+      </article>
+
+      <!-- Example card 2 -->
+      <article class="art-card">
+        <img src="images/piece-02.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2024</span>
+      </article>
+
+      <!-- Example card 3 -->
+      <article class="art-card">
+        <img src="images/piece-03.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2023</span>
+      </article>
+
+      <!-- Example card 4 -->
+      <article class="art-card">
+        <img src="images/piece-04.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2023</span>
+      </article>
+
+      <!-- Example card 5 -->
+      <article class="art-card">
+        <img src="images/piece-05.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2025</span>
+      </article>
+
+      <!-- Example card 6 -->
+      <article class="art-card">
+        <img src="images/piece-06.jpg" alt="Piece title here" />
+        <span class="caption">Title of work, 2025</span>
+      </article>
+
+      <!-- Placeholder — remove once you've filled all cards -->
+      <article class="art-card placeholder" aria-hidden="true">
+        <span class="plus">＋</span>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <p>&copy; 2025 Your Name &mdash; All rights reserved</p>
+  </footer>
+
+</body>
+</html>
