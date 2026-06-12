@@ -8,7 +8,7 @@
   <!-- Fonts: Sniglet (display) + DM Sans (body/nav) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sniglet:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sniglet:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ─── Reset & Base ─────────────────────────────────────────── */
@@ -30,7 +30,7 @@
       /* subtle grain texture via SVG data URI */
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Nunito', sans-serif;
       min-height: 100vh;
     }
 
@@ -83,7 +83,7 @@
     }
 
     nav a {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.14em;
@@ -178,7 +178,7 @@
       bottom: 8px;
       left: 10px;
       right: 10px;
-      font-family: 'Sniglet', serif;
+      font-family: 'Nunito', serif;
       font-style: italic;
       font-size: 0.72rem;
       color: var(--muted);
@@ -189,7 +189,7 @@
     }
 
     /* ─── Placeholder card (shows how to add images) ───────────── */
-    .art-card.placeholder {
+/*    .art-card.placeholder {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -202,7 +202,7 @@
       font-size: 2rem;
       color: #c9bfae;
       user-select: none;
-    }
+    }*/
 
     /* ─── Footer ───────────────────────────────────────────────── */
     footer {
@@ -230,16 +230,16 @@
 
   <!-- ── NAV ────────────────────────────────────────────────── -->
   <nav>
-    <a href="index.html" class="active">Work</a>
-    <a href="about.html">About</a>
-    <a href="sketchbook.html">Sketchbook</a>
-    <a href="commissions.html">Commissions</a>
-    <a href="contact.html">Contact</a>
+    <a href="index.html" class="active">work</a>
+    <a href="about.html">about</a>
+    <a href="sketchbook.html">sketchbook</a>
+    <a href="commissions.html">commissions</a>
+    <a href="contact.html">contact</a>
   </nav>
 
   <!-- ── GALLERY ────────────────────────────────────────────── -->
   <section class="gallery-section">
-    <h2>Selected Works</h2>
+   <!-- <h2>Selected Works</h2> -->
 
     <div class="gallery-grid">
 
@@ -255,41 +255,6 @@
       <article class="art-card">
         <img src="images/piece-01.jpg" alt="Piece title here" />
         <span class="caption">Title of work, 2024</span>
-      </article>
-
-      <!-- Example card 2 -->
-      <article class="art-card">
-        <img src="images/piece-02.jpg" alt="Piece title here" />
-        <span class="caption">Title of work, 2024</span>
-      </article>
-
-      <!-- Example card 3 -->
-      <article class="art-card">
-        <img src="images/piece-03.jpg" alt="Piece title here" />
-        <span class="caption">Title of work, 2023</span>
-      </article>
-
-      <!-- Example card 4 -->
-      <article class="art-card">
-        <img src="images/piece-04.jpg" alt="Piece title here" />
-        <span class="caption">Title of work, 2023</span>
-      </article>
-
-      <!-- Example card 5 -->
-      <article class="art-card">
-        <img src="images/piece-05.jpg" alt="Piece title here" />
-        <span class="caption">Title of work, 2025</span>
-      </article>
-
-      <!-- Example card 6 -->
-      <article class="art-card">
-        <img src="images/piece-06.jpg" alt="Piece title here" />
-        <span class="caption">Title of work, 2025</span>
-      </article>
-
-      <!-- Placeholder — remove once you've filled all cards -->
-      <article class="art-card placeholder" aria-hidden="true">
-        <span class="plus">＋</span>
       </article>
 
     </div>
